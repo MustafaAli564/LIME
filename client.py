@@ -18,13 +18,13 @@ def create_model(input_dim):
 class Client:
     def __init__(self,client_ID, data):
         self.client_ID = client_ID
-        (self.x_train, self.y_train), (self.x_test, self.y_test) = data
+        (self.x_train, self.y_train), (self.x_test, self.y_test), self.feature_names = data
         self.model = create_model(self.x_train.shape[1],)
         self.explainer = LimeTabularExplainer(
             training_data=self.x_train.values,  # Convert DataFrame to NumPy array
             training_labels=self.y_train,
             mode="classification",
-            feature_names=[f"feature_{i}" for i in range(self.x_test.shape[1])],
+            feature_names=self.feature_names,
             class_names=["normal", "DOS", "Probe", "R2L", "U2R"],
             discretize_continuous=True
         )
@@ -58,6 +58,7 @@ class Client:
         return self.client_ID
     
     def get_instance(self, i):
+        print(self.x_test.shape)
         return self.x_test.iloc[i].values  # return NumPy array of the row
 
 

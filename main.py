@@ -8,7 +8,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 import tensorflow as tf
 from tensorflow.keras.utils import to_categorical
-from probattleData import get_data
 import logging
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler
@@ -85,7 +84,7 @@ def preprocess_client1Data(path):
         x_train, x_test, y_train, y_test = train_test_split(
             X, Y, test_size=0.2, random_state=42
         )
-        return (x_train, y_train), (x_test,y_test)
+        return (x_train, y_train), (x_test,y_test), X.columns.tolist()
     except Exception as e:
         logger.error(f"Data loading error: {str(e)}", exc_info=True)
         raise
@@ -131,7 +130,7 @@ def preprocess_client2Data(path):
         x_train, x_test, y_train, y_test = train_test_split(
             X, Y, test_size=0.2, random_state=42
         )
-        return (x_train, y_train), (x_test,y_test)
+        return (x_train, y_train), (x_test,y_test), X.columns.tolist()
     except Exception as e:
         logger.error(f"Data loading error: {str(e)}", exc_info=True)
         raise
